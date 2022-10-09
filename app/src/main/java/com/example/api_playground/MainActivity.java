@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         Gson gson = new Gson();
         ApiResponse apiResponse = gson.fromJson(response,ApiResponse.class);
-        Log.i("MainActivity", gson.toJson(apiResponse));
+        Log.i("MainActivity", gson.toJson(apiResponse.getPersons()));
         //apiResponse.getPersons();
     }
 }
