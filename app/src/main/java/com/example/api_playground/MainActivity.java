@@ -18,40 +18,36 @@ import java.util.List;
 import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity {
-    private  AdapterView adapterView = new AdapterView();
+    private AdapterView adapterView = new AdapterView();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        Button button = findViewById(R.id.requestButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        Methods methods = RetrofitClient.getRetrofitInstance().create(Methods.class);
+        Call<ApiResponse> call = methods.getAllData();
+
+        BackGroundTasks.execute(new Runnable() {
             @Override
-            public void onClick(View view) {
-                Methods methods = RetrofitClient.getRetrofitInstance().create(Methods.class);
-                Call<ApiResponse> call = methods.getAllData();
+            public void run() {
 
-                BackGroundTasks.execute(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-                            List<Person> personList = call.execute().body().getPersons();
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapterView.updateList(personList);
-                                }
-                            });
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                try {
+                    List<Person> personList = call.execute().body().getPersons();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapterView.updateList(personList);
                         }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                    }
-                });
             }
         });
+
 
         RecyclerView recyclerView = findViewById(R.id.Recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

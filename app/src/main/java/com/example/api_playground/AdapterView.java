@@ -9,11 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterView extends RecyclerView.Adapter<AdapterView.ViewHolder> {
 
-    public List<Person> personList;
+    public List<Person> personList = new ArrayList<>();
 
     public AdapterView(){
     }
@@ -29,14 +30,14 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.ViewHolder> {
     public void onBindViewHolder(@NonNull AdapterView.ViewHolder holder, int position) {
         Person person = this.personList.get(position);
         holder.setNamePerson(person.getName());
+        holder.setHeigth(person.getHeight());
+        holder.setBirthYear(person.getBirthYear());
+        holder.setGender(person.getGender());
     }
 
     @Override
     public int getItemCount() {
-        if(this.personList != null){
             return this.personList.size();
-        }
-        return 0;
     }
 
     public void updateList(List<Person> personList){
@@ -46,15 +47,33 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView namePerson;
+        private TextView heigth;
+        private TextView birthYear;
+        private TextView gender;
         private Context context;
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.namePerson = itemView.findViewById(R.id.textViewNameRow);
+            this.heigth = itemView.findViewById(R.id.textViewHeigth);
+            this.birthYear = itemView.findViewById(R.id.textViewBirthYear);
+            this.gender = itemView.findViewById(R.id.textViewGender);
             this.context = context;
         }
 
         public void setNamePerson(String name){
-            this.namePerson.setText(name);
+            this.namePerson.setText("Name: " + name);
+        }
+
+        public void setHeigth(String heigth) {
+            this.heigth.setText("Height: " + heigth);
+        }
+
+        public void setBirthYear(String birthYear) {
+            this.birthYear.setText("BirthYear: " + birthYear);
+        }
+
+        public void setGender(String gender){
+            this.gender.setText("Gender: " + gender);
         }
     }
 }
