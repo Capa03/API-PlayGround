@@ -2,24 +2,22 @@ package com.example.api_playground;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApiResponse {
 
     private int count;
     @SerializedName("results")
-    private List<Person> persons;
-    private String height;
-    @SerializedName("birth_year")
-    private String birthYear;
-    private String gender;
+    private List<Person> persons = new ArrayList<>();
+    private String next;
+    private String previous;
 
-    public ApiResponse(int count, List<Person> persons, String height, String birthYear, String gender) {
+    public ApiResponse(int count, List<Person> persons, String next, String previous) {
         this.count = count;
         this.persons = persons;
-        this.height = height;
-        this.birthYear = birthYear;
-        this.gender = gender;
+        this.next = next;
+        this.previous = previous;
     }
 
     public int getCount() {
@@ -30,15 +28,11 @@ public class ApiResponse {
         return persons;
     }
 
-    public String getHeight() {
-        return height;
+    public String getNext() {
+        return next;
     }
 
-    public String getBirthYear() {
-        return birthYear;
-    }
-
-    public String getGender() {
-        return gender;
+    public String getPrevious() {
+        return previous;
     }
 }
